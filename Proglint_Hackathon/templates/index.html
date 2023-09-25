@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Tumor Detection</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom CSS for the background video */
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensure video covers the entire viewport */
+      z-index: -1;
+    }
+
+    /* Header style with white background */
+    .header {
+      background-color: white;
+      padding: 0px;
+      text-align: center;
+      margin-top: -20px; /* Adjust this value to remove the gap */
+    }
+
+    /* Logo style */
+    .logo {
+      max-width: 200px;
+      margin: 0 10px;
+    }
+
+    /* Main section style */
+    .main-section {
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<video autoplay loop muted class="background-video">
+  <source src="/static/bg.mp4" type="video/mp4"> <!-- Replace with your background video source -->
+  Your browser does not support the video tag.
+</video>
+
+<div class="container mt-5">
+  <div class="header">
+    <img src="/static/proglint.png" alt="Proglint Logo" class="logo">
+    <img src="/static/logo.png" alt="Logo" class="logo">
+    <h1 style="background-color: black; color: white; text-align: center;">Tumor Detector</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <form class="mb-4 main-section" action="/submit" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="my_image">Upload Your MRI Image:</label>
+          <input type="file" class="form-control-file" id="my_image" name="my_image" accept=".jpg, .jpeg, .png" required>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+
+      {% if prediction %}
+      <div class="text-center main-section">
+        <img src="{{ img_path }}" class="img-fluid rounded" alt="Uploaded Image" style="max-width: 100%;">
+        <h2 class="mt-3">Your Prediction: <span class="text-primary">{{ prediction }}</span></h2>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
